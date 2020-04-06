@@ -1,0 +1,32 @@
+<div *ngIf="notFound" class="align-items-center">
+	<div class="alert alert-warning align-text-center" role="alert">
+		{{errorMessage}}
+	  </div>
+</div>
+
+<div class="container d-flex h-75 align-items-center" style="max-width: 300px">
+
+
+
+	<div class="row mx-auto text-center w-100 h-100 overflow-hidden" >
+		
+		<!-- User form to input the city they are from-->
+		<form class="form-signin align-self-center" _lpchecked="1" onSubmit="return false;" >
+			<img class="mb-4" src="./assets/wtf.png" alt="" width="72" height="72">
+			<h1 class="h3 mb-3 font-weight-normal">Where are you from?</h1>
+			<input #test_in type="input" id="locationInput" class="form-control" placeholder="Location">
+			<div class="checkbox mb-3">
+			</div>
+			<button class="btn btn-lg btn-primary btn-block" (click)="onSubmit(test_in.value)" type="button">Find Restaurants</button>
+		  </form>
+		  
+		  <!-- Display the restaurants found by the api --->
+		  <div *ngIf="submitted">
+			<ul>
+				<li *ngFor="let restaurant of restaurants.businesses">{{restaurant.name}}</li>
+			</ul>  			
+		  </div>
+		  
+	</div>
+	
+</div>
