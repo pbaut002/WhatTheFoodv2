@@ -1,1 +1,30 @@
-<p>{{currentRestaurant}}</p>
+
+<div class="container" style="width:100%">
+		<div class="card " style="width: 100%;">
+			<div class="row no-gutters">
+			<div class="col-md-8"><img alt="Card image cap" class="card-img-top border-dark" src="{{ firstRestaurant.image_url }}"/></div>
+			<div class="col-md-4">
+			<div class="card-block">
+				<h2 class="card-title pl-3 pt-2"><a href="{{ firstRestaurant.url }}">{{ firstRestaurant.name }}</a></h2>
+				<div class="card-body">
+					<address>
+					<strong>Address: </strong><br>
+					{{ firstRestaurant.location.display_address[0] }}<br>
+					{{ firstRestaurant.location.city}}, {{ firstRestaurant.location.state }} {{ firstRestaurant.location.zip_code }}<br>
+					<abbr title="Phone">P:</abbr> {{firstRestaurant.display_phone}}
+					</address>
+					<button type="button" class="pl-3 btn btn-primary btn-lg" (click)="getNextRestaurant()">Next Restaurant</button>
+				</div>
+				
+						<!-- <div class="col-md-2">
+							<p *ngFor="let category of firstRestaurant.categories">{{ category.title }}</p>
+						</div>
+						<div class="col align-self-end .offset-md-3">
+							
+						</div> -->
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>

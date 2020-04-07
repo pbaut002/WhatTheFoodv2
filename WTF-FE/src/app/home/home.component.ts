@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
+
 export class HomeComponent implements OnInit {
   submission:string = "";
   submitted:boolean= false;
@@ -37,21 +38,20 @@ export class HomeComponent implements OnInit {
   onSubmit(userLocation:string) {
     this.restaurants = null;
     this.submission = userLocation
-    console.log(userLocation.split(' ').join('+'));
-    this.apiService.getRestaurant(userLocation.split(' ').join('+')).subscribe((data) => {
+  
+    const locationData = userLocation.split(' ').join('+');
+    this.apiService.getRestaurant(locationData).subscribe((data) => {
         this.notFound=false;
         this.submitted=true;
         this.restaurants = JSON.stringify(data);
         this.restaurants = JSON.parse(this.restaurants.toString());
-        this.router.navigate(['restaurant/',this.restaurants['businesses'][0]['name']]);
+        this.router.navigate(['location/',locationData]);
     },
     error => {
       this.submitted=false;
       this.notFound=true;
       this.errorMessage=`${userLocation} was not found`;
-    });
-    console.log(this.restaurants);
-    
+    });  
   }
 
 }

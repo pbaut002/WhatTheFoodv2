@@ -20,13 +20,6 @@
 			<button class="btn btn-lg btn-primary btn-block" (click)="onSubmit(test_in.value)" type="button">Find Restaurants</button>
 		  </form>
 		  
-		  <!-- Display the restaurants found by the api --->
-		  <div *ngIf="submitted">
-			<ul>
-				<li *ngFor="let restaurant of restaurants.businesses">{{restaurant.name}}</li>
-			</ul>  			
-		  </div>
-		  
 	</div>
 	
 </div>

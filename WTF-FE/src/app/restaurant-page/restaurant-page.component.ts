@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ApiService } from '~/src/app/api.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-restaurant-page',
@@ -7,18 +8,35 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./restaurant-page.component.css']
 })
 export class RestaurantPageComponent implements OnInit {
-
-  constructor(public route: ActivatedRoute) { }
-  currentRestaurant:string = "";
-  remainingRestaurants = null;
-
+  userLocation:string = "";
+  restaurants:Object;
+  firstRestaurant:string = "";
+  constructor(public route: ActivatedRoute, private api: ApiService, public router: Router) { 
+  }
+  
   ngOnInit() {
-    this.route.data.subscribe( restaurantList => {
-      console.log(restaurantList);
-      var data = JSON.stringify(restaurantList);
-      this.remainingRestaurants = JSON.parse(data);
-      this.currentRestaurant = this.remainingRestaurants[0];
+    this.userLocation = this.route.snapshot.params.address;
+    console.log(this.route.snapshot.params.address);
+
+    this.api.getRestaurant(this.userLocation).subscribe(data => {
+      var temp = JSON.stringify(data);
+      this.restaurants = JSON.parse(temp);
+      // Wait until get response from api, and get the first item
+      this.firstRestaurant = (this.restaurants['businesses'].shift());
+    },
+    error => {
+      this.router.navigate(['/']);
+      console.log(`There was trouble getting restaurants from ${this.userLocation}`);
     });
   }
 
+
+  getNextRestaurant(){
+    /* Get the next restaurant in the list while there is still something to get */
+    if (this.restaurants['businesses'].length == 0){
+      this.firstRestaurant = "Empty :C";
+      return;
+    }
+    this.firstRestaurant = (this.restaurants['businesses'].shift());
+  }
 }
